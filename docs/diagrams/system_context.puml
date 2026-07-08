@@ -7,6 +7,8 @@
 
 !include <C4/C4_Context>
 
+skinparam BackgroundColor transparent
+
 Person(user, "User", "User of the platform, able to post and view posts")
 
 System(atlas, "The Community Atlas", "A social platform for sharing and discovering travel experiences through location-based images")

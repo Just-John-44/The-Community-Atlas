@@ -5,6 +5,8 @@
 
 @startuml Containers
 
+skinparam BackgroundColor transparent
+
 !include <C4/C4_Container>
 
 Person(user, "User", "User of the platform, able to post and view posts")

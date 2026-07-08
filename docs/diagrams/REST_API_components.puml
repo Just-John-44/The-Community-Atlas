@@ -7,6 +7,8 @@
 
 !include <C4/C4_Component>
 
+skinparam BackgroundColor transparent
+
 Container(webapp, "Front-end SPA", "TypeScript, React", "Delivers static content to the user and provides UI for all content")
 
 Container_Boundary(restAPI, "REST API Application") {

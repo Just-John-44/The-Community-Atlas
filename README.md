@@ -44,6 +44,15 @@ promote community among travelers and to inspire adventure.
 ## System Architecture
 The following diagrams are meant to follow the C4 documenting style.
 
+### Container
+<img src="/docs/diagrams/containers.svg"
+     alt="System Container Diagram"
+     width="50%">
+
+### Component
+<img src="/docs/diagrams/REST_API_components.svg"
+     alt="REST API Component Diagram"
+     width="50%">
 
 ## Current Goal
 Build a dockerized bare bones front-end and back-end that communicate with each other
