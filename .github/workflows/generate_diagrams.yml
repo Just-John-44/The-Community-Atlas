@@ -26,14 +26,18 @@ jobs:
           distribution: temurin
           java-version: "21"
 
-      - name: Install PlantUML
+      - name: Install Graphviz
         run: |
           sudo apt-get update
-          sudo apt-get install -y plantuml graphviz
+          sudo apt-get install -y graphviz
 
-      - name: Generate PNGs
+      - name: Install PlantUML
         run: |
-          find docs/diagrams -name "*.puml" -exec plantuml -tsvg {} \;
+          wget https://github.com/plantuml/plantuml/releases/latest/download/plantuml.jar
+
+      - name: Generate SVGs
+        run: |
+          find docs/diagrams -name "*.puml" -exec java -jar plantuml.jar -tsvg {} \;
 
       - name: Commit updated diagrams
         run: |

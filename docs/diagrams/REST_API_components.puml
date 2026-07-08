@@ -3,8 +3,9 @@
 ' Last Edited: 7/7/2026
 ' Author: John Wesley Thompson
 
-@startuml RESTAPIComponent
+@startuml REST_API_Components
 
+!include <C4/C4>
 !include <C4/C4_Component>
 
 skinparam BackgroundColor transparent
