@@ -1,0 +1,29 @@
+' containers.puml
+' Created: 7/7/2026
+' Last Edited: 7/7/2026
+' Author: John Wesley Thompson
+
+@startuml Containers
+
+!include <C4/C4_Container>
+
+Person(user, "User", "User of the platform, able to post and view posts")
+
+System_Boundary(atlas, "The Community Atlas") {
+    Container(webapp, "Front-end SPA", "TypeScript, React", "Delivers static content to the user and provides a UI for all user actions")
+    Container(server, "REST API Application", "Python", "Handles authentication, authorization, business logic, and REST endpoints")
+
+    ContainerDb(postgresDb, "Relational Database", "PostgreSQL + PostGIS", "Stores users, posts, comments, follows, locations, images metadata, and TOTP secrets")
+    ContainerDb(redisDb, "In-memory Store", "Redis", "Caches application data, stores transient state, and supports queues and rate limiting")
+}
+
+System_Ext(storage, "Object Storage", "Amazon S3 services")
+
+Rel(user, webapp, "Uses", "HTTPS")
+Rel(webapp, server, "Makes REST API requests", "HTTPS")
+Rel(server, postgresDb, "Reads and Writes", "PostgreSQL protocol")
+Rel(server, redisDb, "Reads and Writes", "Redis protocol")
+Rel(server, storage, "Generates pre-signed URLs", "AWS SDK")
+Rel(webapp, storage, "Uploads and receives images", "HTTPS")
+
+@enduml

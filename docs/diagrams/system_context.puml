@@ -1,0 +1,19 @@
+' system_context.puml
+' Created: 7/7/2026
+' Last Edited: 7/7/2026
+' Author: John Wesley Thompson
+
+@startuml SystemContext
+
+!include <C4/C4_Context>
+
+Person(user, "User", "User of the platform, able to post and view posts")
+
+System(atlas, "The Community Atlas", "A social platform for sharing and discovering travel experiences through location-based images")
+
+' System_Ext(storage, "Image Storage Service", "Stores images such as profile pictures and post images")
+
+Rel(user, atlas, "Uses")
+' Rel(atlas, storage, "Stores images")
+
+@enduml

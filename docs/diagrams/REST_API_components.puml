@@ -1,0 +1,70 @@
+' containers.puml
+' Created: 7/7/2026
+' Last Edited: 7/7/2026
+' Author: John Wesley Thompson
+
+@startuml RESTAPIComponent
+
+!include <C4/C4_Component>
+
+Container(webapp, "Front-end SPA", "TypeScript, React", "Delivers static content to the user and provides UI for all content")
+
+Container_Boundary(restAPI, "REST API Application") {
+    Component(authController, "Auth Controller")
+    Component(postController, "Post Controller")
+    Component(userController, "User Controller")
+    Component(feedController, "Feed Controller")
+    Component(mediaController, "Image Controller")
+
+    Component(authService, "Auth Service")
+    Component(postService, "Post Service")
+    Component(userService, "User Service")
+    Component(feedService, "Feed Service")
+    Component(mediaService, "Image Service")
+
+    Component(postRepo, "Post Repository")
+    Component(userRepo, "User Repository")
+    Component(mediaRepo, "Media Repository")
+    ' Component(commentRepo, "Comment Repository")
+    Component(followRepo, "Follow Repository")
+}
+
+ContainerDb(postgresDb, "Relational Database", "PostgreSQL + PostGIS", "Stores users, posts, comments, follows, locations, images metadata, and TOTP secrets")
+ContainerDb(redisDb, "In-memory Store", "Redis", "Caches application data, stores transient state, and supports queues and rate limiting")
+
+System_Ext(storage, "Object Storage", "Amazon S3 services")
+
+Rel(webapp, authController, "HTTPS")
+Rel(webapp, postController, "HTTPS")
+Rel(webapp, userController, "HTTPS")
+Rel(webapp, feedController, "HTTPS")
+Rel(webapp, mediaController, "HTTPS")
+
+Rel(authController, authService, "Uses")
+Rel(postController, postService, "Uses")
+Rel(userController, userService, "Uses")
+Rel(feedController, feedService, "Uses")
+Rel(mediaController, mediaService, "Uses")
+
+Rel(authService, userRepo, "Uses")
+Rel(authService, redisDb, "Uses")
+Rel(postService, postRepo, "Uses")
+Rel(postService, userRepo, "Uses")
+Rel(postService, mediaRepo, "Uses")
+Rel(postService, redisDb, "Uses")
+Rel(userService, userRepo, "Uses")
+Rel(userService, followRepo, "Uses")
+Rel(feedService, postRepo, "Uses")
+Rel(feedService, redisDb, "Uses")
+Rel(feedService, followRepo, "Uses")
+Rel(mediaService, mediaRepo, "Uses")
+Rel(mediaService, storage, "Uploads/Downloads")
+
+Rel(postRepo, postgresDb, "Reads/Writes")
+Rel(userRepo, postgresDb, "Reads/Writes")
+Rel(mediaRepo, postgresDb, "Reads/Writes")
+Rel(followRepo, postgresDb, "Reads/Writes")
+' Rel(commentRepo, postgresDb, "Reads/Writes")
+
+
+@enduml
