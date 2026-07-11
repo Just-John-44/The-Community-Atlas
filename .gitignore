@@ -1,0 +1,45 @@
+# Environment
+.env
+.env.*
+!.env.example
+*.local
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Node
+logs/
+node_modules/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+
+# Docker / local runtime data
+*.pid
+*.seed
+*.sqlite
+*.sqlite3
+
+# Build
+dist/
+

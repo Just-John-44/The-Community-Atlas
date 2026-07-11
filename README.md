@@ -54,6 +54,30 @@ The following diagrams are meant to follow the C4 documenting style.
      alt="REST API Component Diagram"
      width="70%">
 
-## Current Goal
-Build a dockerized bare bones front-end and back-end that communicate with each other
+## Docker Setup
+Copy the backend .env example:
 
+```bash
+cp backend/app/.env.example backend/app/.env
+```
+
+Start the app:
+
+```bash
+docker compose up --build
+```
+
+Open:
+
+Front-end: http://localhost:5173
+
+Back-end: http://localhost:8000
+
+## Current Goal
+Create a logger and multiple tests for the front-end and back-end to improve debugging as the projects expand
+
+### To Do 
+- Add unit, integration, and end-to-end tests
+- Move register functionality out of the auth service into a user service 
+- Make database connection asyncronous
+- Create a connection pool for the database

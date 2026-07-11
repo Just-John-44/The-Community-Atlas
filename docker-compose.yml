@@ -1,0 +1,68 @@
+# docker-compose.yml
+# Created: Jul 9 2026
+# Last Edited: Jul 10 2026
+# Author: John Wesley Thompson
+
+# version: "3.9"
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: the-com-atlas-frontend-image
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: the-com-atlas-backend-image
+    restart: unless-stopped
+    env_file:
+      - ./backend/app/.env
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_DATABASE: the_community_atlas_db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_PORT: "5432"
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  # redis:
+  #   image: redis:7-alpine
+  #   container_name: the-com-atlas-redis
+  #   restart: unless-stopped
+  #   ports:
+  #     - "6379:6379"
+  #   volumes:
+  #     - redis_data:/data
+
+  postgres:
+    image: postgres:14.1-alpine
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+    ports: 
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d the_community_atlas_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  # redis_data:
+  postgres_data:
